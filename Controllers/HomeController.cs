@@ -1,19 +1,31 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using LandingPage.Models;
 
-namespace LandingPage.Controllers
+namespace LandingPage.Controllers;
+
+public class HomeController : Controller
 {
-    public class HomeController : Controller
-    {
-        public IActionResult Index()
-        {
-            return View();
-        }
+    private readonly ILogger<HomeController> _logger;
 
-        [HttpPost]
-        public IActionResult Contact(string name, string email, string message)
-        {
-            TempData["Message"] = "Thank you for reaching out! We'll get back to you soon.";
-            return RedirectToAction("Index");
-        }
+    public HomeController(ILogger<HomeController> logger)
+    {
+        _logger = logger;
+    }
+
+    public IActionResult Index()
+    {
+        return View();
+    }
+
+    public IActionResult Privacy()
+    {
+        return View();
+    }
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
